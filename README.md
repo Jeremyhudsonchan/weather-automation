@@ -8,7 +8,7 @@
 
 Install python latest version from official website
 
-- <https://www.python.org/downloads/>
+- python.org/downloads/
 
 Or
 
