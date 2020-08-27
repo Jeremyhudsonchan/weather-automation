@@ -68,6 +68,8 @@ python3 get_monthly_temperature.py
 
 ## Checking data collected
 
+- python unittest on csv file
+
 ```cmd
 python3 test_case.py
 ```
