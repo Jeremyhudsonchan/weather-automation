@@ -1,18 +1,73 @@
-# Set up venv
+# Automation Program to retrieve monthly temperature data
 
-pip install -r requirements.txt
+## Weather website to get data from
 
-# Execute
+- weather.com
 
-python qa_challenge.py
+## Installing python
 
-or 
+Install python latest version from official website
 
-python qa_challenge_class.py
+- <https://www.python.org/downloads/>
 
-# Test Case
+Or
 
-python test_case.py
+Update python using Homebrew
 
-# Demo
-https://youtu.be/xm_YUMsFkCA
+```cmd
+brew install python3
+```
+
+Check python version
+
+```cmd
+python3 --version
+```
+
+## Setting up venv
+
+- Creating virtual environment
+
+```cmd
+python3 -m venv venv
+```
+
+- Enter venv
+
+```cmd
+source venv/bin/activate
+```
+
+- Install modules
+
+```cmd
+pip3 install -r requirements.txt
+```
+
+## Running the program
+
+```cmd
+python3 get_monthly_temperature.py
+```
+
+### Enter the following information
+
+- Desired Location
+  - Default Location = Hong Kong
+- Desired Month
+  - Default Month = current month - 1
+- File Name
+  - Default File Nametemp_data.csv
+- Data Directory
+  - Default Directory = /data
+
+## Data
+
+- Data will be saved inside the selected directory
+  - i.e. /data
+
+## Checking data collected
+
+```cmd
+python3 test_case.py
+```

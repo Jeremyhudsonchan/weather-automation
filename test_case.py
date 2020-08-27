@@ -4,9 +4,10 @@ import pandas as pd
 from datetime import date, timedelta
 
 class TestResults(unittest.TestCase):
+    directory_name = input("directory name of csv: ")
     file_name = input("csv file name: ")
-    pathCSV = file_name
-    data = pd.read_csv(file_name) 
+    pathCSV = directory_name + '/' + file_name
+    data = pd.read_csv(pathCSV) 
     df = pd.DataFrame(data)
 
     first_day_of_current_month = date.today().replace(day=1)

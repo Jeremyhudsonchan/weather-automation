@@ -9,18 +9,18 @@ from datetime import date, timedelta
 import os
 import csv
 
-class GetMonthlyTemperature():
-    def __init__(self, file_name, selected_location):
+class GetData():
+    def __init__(self, selected_location, file_name, selected_month, data_path):
         self.file_name = file_name
         self.selected_location = selected_location
+        self.selected_month = selected_month
+        self.data_path = data_path
     
-    def results(self):
+    def results(self,  selected_location = 'Hong Kong', file_name = 'temp_data.csv', selected_month = 'last', data_path='data'):
         path = 'drivers/chromedriver'
         driver = webdriver.Chrome(path)
         driver.implicitly_wait(30)
-
         driver.get("https://weather.com/")
-
         sleep(5)
 
         location_search = driver.find_element_by_id("LocationSearch_input")
@@ -36,11 +36,16 @@ class GetMonthlyTemperature():
 
         month_selection = Select(driver.find_element_by_id("month-picker"))
         sleep(3)
-        first_day_of_current_month = date.today().replace(day=1)
-        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
-        d = last_day_of_previous_month.strftime('%b %Y')
-        month_selection.select_by_visible_text(d)
-        sleep(4)
+
+        if selected_month == 'last':
+            first_day_of_current_month = date.today().replace(day=1)
+            last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+            default_selected_month = last_day_of_previous_month.strftime('%b %Y')
+            month_selection.select_by_visible_text(default_selected_month)
+            sleep(4)
+        else:
+            month_selection.select_by_visible_text(selected_month)
+            sleep(4)
 
         x = driver.find_element_by_class_name("forecast-monthly__calendar")
 
@@ -60,6 +65,15 @@ class GetMonthlyTemperature():
                         temp[last_key]['hi'] = v[:-1]
                     else:
                         temp[last_key]['low'] = v[:-1]
+        
+        if not os.path.exists(data_path):
+            os.makedirs(data_path)
+            print("Created new directory " + data_path)
+        os.chdir(data_path)
+        try:
+            os.remove(file_name)
+        except OSError:
+            pass
 
         with open(file_name, mode='w') as file:
             file_writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -76,15 +90,12 @@ class GetMonthlyTemperature():
 
 
 if __name__ == "__main__":
-    file_name = input("Enter file name(csv): ")
-    selected_location = input("Enter desired location: ")
-
-    try:
-        os.remove(file_name)
-    except OSError:
-        pass
-
+    selected_location = input("Enter desired location (i.e. Hong Kong): ")
+    selected_month = input("Enter desired month (i.e. Jul 2020, default = 'last month'): ")
+    file_name = input("Enter file name (.csv format, default = 'temp_data.csv'): ")
+    data_path = input("Enter data storage directory(default = 'data'): ")
+       
     print("run")
     
-    weather = GetMonthlyTemperature(file_name, selected_location)
+    weather = GetData(selected_location, file_name, selected_month, data_path)
     weather.results()
