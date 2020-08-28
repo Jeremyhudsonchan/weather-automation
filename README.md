@@ -1,6 +1,6 @@
 # Automation Program to retrieve monthly temperature data
 
-## Data collected from 
+## Data collected from
 
 - weather.com
 
