@@ -53,13 +53,9 @@ python3 get_monthly_temperature.py
 ### Enter the following information
 
 - Desired Location
-  - Default Location = Hong Kong
-- Desired Month
-  - Default Month = current month - 1
 - File Name
-  - Default File Nametemp_data.csv
+- Desired Month
 - Data Directory
-  - Default Directory = /data
 
 ## Data
 

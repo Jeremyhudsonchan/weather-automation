@@ -16,14 +16,15 @@ class GetData():
         self.selected_month = selected_month
         self.data_path = data_path
     
-    def results(self,  selected_location = 'Hong Kong', file_name = 'temp_data.csv', selected_month = 'last', data_path='data'):
-        path = 'drivers/chromedriver'
+    def results(self):
+        path = 'chromedriver/chromedriver'
         driver = webdriver.Chrome(path)
         driver.implicitly_wait(30)
         driver.get("https://weather.com/")
         sleep(5)
 
         location_search = driver.find_element_by_id("LocationSearch_input")
+
         location_search.send_keys(selected_location)
         sleep(2)
         location_search.send_keys(Keys.RETURN)
@@ -91,11 +92,12 @@ class GetData():
 
 if __name__ == "__main__":
     selected_location = input("Enter desired location (i.e. Hong Kong): ")
-    selected_month = input("Enter desired month (i.e. Jul 2020, default = 'last month'): ")
-    file_name = input("Enter file name (.csv format, default = 'temp_data.csv'): ")
-    data_path = input("Enter data storage directory(default = 'data'): ")
-       
-    print("run")
-    
-    weather = GetData(selected_location, file_name, selected_month, data_path)
-    weather.results()
+    selected_month = input("Enter desired month (i.e. Jul 2020): ")
+    file_name = input("Enter file name (.csv format): ")
+    data_path = input("Enter data storage directory: ")
+
+    if not selected_location or not selected_month or not file_name or not data_path:
+        raise ValueError ("Enter values in all fields")
+    else:
+        weather = GetData(selected_location, file_name, selected_month, data_path)
+        weather.results()
